@@ -1,0 +1,20 @@
+﻿1. Tell me about yourself?
+   1. I am a recent graduate in computer science who thrives in difficult situations and high-stress environments.  I have been coding and taking computer courses for 8 years now.  I am a natural leader and love to help others.  Aswell as learning new skills and using those skills to help others.
+2. What is your biggest strength?
+   1. One of my biggest strengths is my work ethic, not getting discouraged when something goes wrong, and working tirelessly to achieve my goal.
+3. What is your biggest weakness?
+   1. My biggest weakness can be when I am working on something I can tend to get caught up on what I’m doing and if i am close to figuring out my work/ problem, I will try to do it on my own without asking for assistance.  But i am not afraid to ask for help from others.
+4. Why should we hire you?
+   1. You should hire me because I am a hardworking individual who loves to learn new things everyday, and I am an active listener and good communicator.  I am an extrovert and enjoy collaboration with others and hearing out others ideas.
+5. How well do you handle stress?
+   1. I handle stress very well, not letting it get to me or stopping me from completing the task at hand.  I feel that I thrive in high stresss environments compared to others.
+6. Describe a time you have worked in a team?
+   1. During my senior year of college, I had the pleasure of serving as the Student Body President, where I led a team of 12 other people, including my VP.  Delegating work and learning to that I dont have to do everything on my own, and being a leader for my executive board to look up to and ask for help when they felt it was needed.
+7. Where do you see yourself in 5 years?
+   1. In the next 5 years i see myself growing still and hopefully helping the company, that I work for, grow and advance in new technologies and systems.  Continuously learning new skills to help me in my job and everyday life.
+8. Why are you suitable for this job?
+   1. I believe I am fit for this job based on my experience and knowledge of computer science and my strong leadership abilities.  Aswell as being an active listener and keeping a growth mindset when facing new challenges.
+9. Tell me about a time when you had to deal with a difficult person?
+   1. When I have had to deal with difficult people I really rely on listening to them and hearing out why they may be upset ot stressed.  Taking what they tell me and trying to help them anyway I can without making their situation worse.  Not leaching out at them just because they are being difficult but trying to cool down the heated situations.
+10. Why do you want to work here?
+   1. I want to work here because I see myself helping the company grow and deal with problems they might have.  Also, growing myself to always learn new things and using thenew found  knowledge to help others/ the company also continuously grow.  Lastly I want to work here just to help others grow and learn, and work towards making the world become safer and more efficient when developing new systems or ideas.
