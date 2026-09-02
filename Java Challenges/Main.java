@@ -1,95 +1,43 @@
-void main() {
-    //Challenge 1
-    int age = 23;
-    double height = 5.9;
-    String name = "Gabe";
-    System.out.println(name + " is " + age + " years old and " + height + " feet tall.");
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
 
-    //Challenge 2
-    int a = 20;
-    int b = 10;
-    int add = a + b;
-    int sub = a - b;
-    int mul = a * b;
-    int div = a / b;
-    boolean c = a > b;
-    boolean d = b > 0;
-    System.out.println("Addition: "+add);
-    System.out.println("Subtraction: "+sub);
-    System.out.println("Multiplication: "+mul);
-    System.out.println("Division: "+div);
-    System.out.println("Is a > b? "+c);
-    System.out.println("Is b > 0?"+d);
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        List<Integer> numbers = new ArrayList<>();
+        int total = 0;
 
-    //Challenge 3
-    int grade = 75;
-    String letterGrade = "B";
-    if(grade > 50) {
-        System.out.println("Passed");
-        if(grade >= 90) {
-            System.out.println("Grade: A");
+        for (int i = 0; i < 5; i++) {
+            System.out.println("Please enter number");
+            numbers.add(scan.nextInt());
+
         }
-        else if(grade <= 89 && grade >= 75) {
-            System.out.println("Grade: B");
-        }
-        else if(grade <= 74 && grade >= 60) {
-            System.out.println("Grade: C");
-        }
-        else {
-            System.out.println("Grade: D");
-        }
-    } else {
-        System.out.println("Failed");
-    }
+        scan.close();
 
-    //Challenge 4
-    System.out.print("For Loop: ");
-    for(int i = 1; i <= 5; i++ ) {
-            System.out.print(" "+i);
-    }
-    System.out.println();
-    System.out.print("While Loop: ");
-    int i =1;
-    while(i <=5) {
-        System.out.print(" "+i);
-        i++;
-    }
-    System.out.println();
-    System.out.print("Do-While Loop: ");
-    int j=1;
-    do {
-        System.out.print(" "+j);
-        j++;
-    } while(j <= 5);
-    System.out.println();
+        int sum = numbers.stream().mapToInt(Integer::intValue).sum();
+        System.out.println("Total: " + sum);
+        double avg = sum / 5;
+        System.out.println("Average: " + avg);
+        int max = Collections.max(numbers);
+        int min = Collections.min(numbers);
+        System.out.println("Highest: " + max);
+        System.out.println("Lowest: " + min);
 
-    //Challenge 5
-    double num1 = 7;
-    double num2 = 3;
-    char operator = '+';
-    String again = "y";
-
-    while (again.equals("y")) {
-        if (operator == '+') {
-            double result = num1 + num2;
-            System.out.println("Result: " + result);
-        } else if (operator == '-') {
-            double result = num1 - num2;
-            System.out.println("Result: " + result);
-        } else if (operator == '*') {
-            double result = num1 * num2;
-            System.out.println("Result: " + result);
-        } else if (operator == '/') {
-            if (num2 == 0) {
-                System.out.println("Cannot divide by zero.");
+        for (int num : numbers) {
+            if (num >= 90) {
+                System.out.println(num + " - A");
+            } else if (num < 90 && num >= 80) {
+                System.out.println(num + " - B");
+            } else if (num < 80 && num >= 70) {
+                System.out.println(num + " - C");
+            } else if (num < 70 && num >= 60) {
+                System.out.println(num + " - D");
             } else {
-                double result = num1 / num2;
-                System.out.println("Result: " + result);
+                System.out.println(num + " - F");
             }
         }
 
-        again = "n";
     }
-    System.out.println("Thank you for using the calculator.");
 }
-
