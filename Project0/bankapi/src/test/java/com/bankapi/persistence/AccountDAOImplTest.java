@@ -21,17 +21,17 @@ import org.junit.jupiter.api.Test;
 import com.bankapi.domain.Account;
 import com.bankapi.exception.DataAccessException;
 
-/**
- * Repository-layer tests for AccountDAOImpl. Unlike the Service-layer
- * tests (which mock the DAOs), these run against the REAL Postgres
- * database in Docker - there's no meaningful way to "mock" a SQL
- * statement and still prove the SQL itself is correct.
- *
- * Every test creates its own account with a random ID, and the
- * @AfterEach cleanup method deletes it afterward, so running this class
- * never leaves test data behind and never collides with real accounts.
- *
- * Requires the bankapi-db Docker container to be running.
+/*
+ Repository-layer tests for AccountDAOImpl. Unlike the Service-layer
+ tests (which mock the DAOs), these run against the real Postgres
+ database in Docker - there's no meaningful way to "mock" a SQL
+ statement and still prove the SQL itself is correct.
+
+ Every test creates its own account with a random ID, and the
+ @AfterEach cleanup method deletes it afterward, so running this class
+ never leaves test data behind and never collides with real accounts.
+
+ Requires the bankapi-db Docker container to be running.
  */
 class AccountDAOImplTest {
 
@@ -40,7 +40,6 @@ class AccountDAOImplTest {
 
     @BeforeAll
     static void setUpSchema() {
-        // Safe to call every run - it's all CREATE TABLE IF NOT EXISTS.
         SchemaInitializer.initialize();
     }
 
@@ -87,7 +86,7 @@ class AccountDAOImplTest {
 
         // Creating a second account with the SAME id collides with the
         // PRIMARY KEY constraint in Postgres, and AccountDAOImpl.createAccount
-        // wraps that SQLException as a DataAccessException - never a raw one.
+        // wraps that SQLException as a DataAccessException.
         assertThrows(DataAccessException.class, () -> accountDAO.createAccount(account));
     }
 

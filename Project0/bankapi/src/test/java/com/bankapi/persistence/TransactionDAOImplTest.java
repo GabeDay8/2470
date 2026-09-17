@@ -24,20 +24,19 @@ import com.bankapi.domain.TransactionRecord;
 import com.bankapi.domain.TransactionType;
 import com.bankapi.exception.BankingException;
 
-/**
- * Repository-layer tests for TransactionDAOImpl - the class that actually
- * performs the debit/credit/insert work inside a single JDBC transaction.
- * These run against the real Postgres database because the whole point is
- * to prove the SQL and the commit/rollback logic really behave atomically;
- * a mock can't tell you that.
- *
- * The two "insufficientFunds" tests below matter most for the rubric's
- * ACID requirement: they prove that when a transfer or withdrawal is
- * rejected partway through, NOTHING was written - not a partial balance
- * change, not a stray transaction row. Money never vanishes and never
- * gets created from nothing.
- *
- * Requires the bankapi-db Docker container to be running.
+/*
+ Repository-layer tests for TransactionDAOImpl - the class that actually
+ performs the debit/credit/insert work inside a single JDBC transaction.
+ These run against the real Postgres database because the whole point is
+ to prove the SQL and the commit/rollback logic really behave atomically.
+
+ The two "insufficientFunds" tests below matter most for the
+ ACID requirement: they prove that when a transfer or withdrawal is
+ rejected partway through, nothing was written - not a partial balance
+ change, not a stray transaction row. Money never vanishes and never
+ gets created from nothing.
+
+ Requires the bankapi-db Docker container to be running.
  */
 class TransactionDAOImplTest {
 
@@ -131,7 +130,7 @@ class TransactionDAOImplTest {
 
         // The whole point of the "WHERE balance >= ?" guard clause plus the
         // transaction rollback: a rejected withdrawal must leave the balance
-        // EXACTLY where it was, and must not create a transaction row either.
+        // exactly where it was, and must not create a transaction row either.
         assertEquals(0, new BigDecimal("30.00").compareTo(accountDAO.findById(accountId).getBalance()));
         assertTrue(transactionDAO.findByAccountId(accountId, 10).isEmpty());
     }
@@ -170,12 +169,14 @@ class TransactionDAOImplTest {
         assertThrows(BankingException.class,
                 () -> transactionDAO.recordTransfer(fromId, toId, new BigDecimal("999.00")));
 
-        // This is the ACID test the rubric cares about most: when the debit
-        // fails partway through recordTransfer, the credit that already ran
-        // in the same database transaction must be rolled back too. If this
-        // assertion ever fails, money either vanished or was created from
-        // nothing - exactly what setAutoCommit(false)/commit()/rollback() in
-        // TransactionDAOImpl.recordTransfer exists to prevent.
+        /*
+         This is the ACID test the rubric cares about most: when the debit
+         fails partway through recordTransfer, the credit that already ran
+         in the same database transaction must be rolled back too. If this
+         assertion ever fails, money either vanished or was created from
+         nothing - exactly what setAutoCommit(false)/commit()/rollback() in
+         TransactionDAOImpl.recordTransfer exists to prevent.
+        */
         assertEquals(0, new BigDecimal("20.00").compareTo(accountDAO.findById(fromId).getBalance()));
         assertEquals(0, new BigDecimal("5.00").compareTo(accountDAO.findById(toId).getBalance()));
         assertTrue(transactionDAO.findByAccountId(fromId, 10).isEmpty());
@@ -197,7 +198,6 @@ class TransactionDAOImplTest {
         List<TransactionRecord> history = transactionDAO.findByAccountId(accountId, 2);
 
         assertEquals(2, history.size());
-        // Most recent deposit (30.00) should come back first.
         assertEquals(0, new BigDecimal("30.00").compareTo(history.get(0).getAmount()));
     }
 

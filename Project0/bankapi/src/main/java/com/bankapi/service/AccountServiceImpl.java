@@ -51,7 +51,7 @@ public class AccountServiceImpl implements AccountService {
     public Account login(String accountId, String pin) {
         Account account = accountDAO.findById(accountId);
 
-        // Deliberately the SAME error message whether the account doesn't exist or
+        // Deliberately the same error message whether the account doesn't exist or
         // the PIN is wrong - this stops someone from being able to tell which one
         // it was, which would otherwise let them fish for valid account IDs.
         if (account == null || !PinHasher.matches(pin, account.getPinHash())) {
@@ -82,11 +82,12 @@ public class AccountServiceImpl implements AccountService {
         Account account = requireAccount(accountId);
         requirePositiveAmount(amount);
 
-        // This is the Business layer's "can this user afford it" check - it gives a
-        // fast, friendly rejection for the common case. TransactionDAO.recordWithdrawal
-        // re-checks the SAME rule atomically at the database level (see the "AND
-        // balance >= ?" guard there), which is what actually prevents an overdraft
-        // if two withdrawals happened at the exact same moment. Belt and suspenders.
+        /*
+         This is the Business layer's "can this user afford it" check - it gives a
+         fast, friendly rejection for the common case. TransactionDAO.recordWithdrawal
+         re-checks the same rule atomically at the database level, which is what actually
+         prevents an overdraft if two withdrawals happened at the exact same moment.
+        */
         if (account.getBalance().compareTo(amount) < 0) {
             LOGGER.severe(() -> "Rejected withdrawal of " + amount + " for account " + accountId
                     + " - insufficient funds");

@@ -11,19 +11,17 @@ import com.bankapi.exception.BankingException;
 import com.bankapi.exception.DataAccessException;
 import com.bankapi.service.AccountService;
 
-/**
- * The whole API layer. Its only job is: print menus, read input, call
- * AccountService, print the result. It never touches SQL and never decides
- * whether a withdrawal is allowed - that's all the Service layer's job.
- *
- * Two exception types get caught here, and ONLY here, and they're handled
- * completely differently:
- *   - BankingException: a user mistake (wrong PIN, insufficient funds...).
- *     Its message is safe to print as-is.
- *   - DataAccessException: a system failure. Its message may contain SQL
- *     detail, so it gets logged (not shown), and the user sees a generic,
- *     non-scary message instead. This is the rubric's "Security First" rule.
- */
+/*
+ The whole API layer. Its only job is: print menus, read input, call
+ AccountService, print the result. It never touches SQL and never decides
+ whether a withdrawal is allowed - that's the Service layer's job.
+
+ Two exception types get caught here, and only here:
+   - BankingException: a user mistake (wrong PIN, insufficient funds).
+   - DataAccessException: a system failure. Its message may contain SQL
+     detail, so it gets logged, and the user sees a generic,
+    non-scary message instead. This is the rubric's "Security First" rule.
+*/
 public class BankRepl {
 
     private static final Logger LOGGER = Logger.getLogger(BankRepl.class.getName());

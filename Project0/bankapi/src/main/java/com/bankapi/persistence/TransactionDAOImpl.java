@@ -15,22 +15,23 @@ import com.bankapi.domain.TransactionType;
 import com.bankapi.exception.BankingException;
 import com.bankapi.exception.DataAccessException;
 
-/**
- * This is the class that keeps the ledger ACID. Every public method opens
- * exactly ONE connection, turns autocommit off, does every statement the
- * operation needs on that same connection, and either commits everything
- * or rolls back everything. That's the whole trick: as long as every
- * statement in one "operation" shares one connection, Postgres guarantees
- * they succeed or fail together.
+/*
+ This is the class that keeps the ledger ACID. Every public method opens
+ exactly one connection, turns autocommit off, does every statement the
+ operation needs on that same connection, and either commits everything
+ or rolls back everything. As long as every statement in one
+ "operation" shares one connection, Postgres guarantees
+ they succeed or fail together.
  */
 public class TransactionDAOImpl implements TransactionDAO {
 
     private static final String CREDIT_SQL =
             "UPDATE accounts SET balance = balance + ? WHERE account_id = ? RETURNING balance";
-
-    // The "AND balance >= ?" guard is what makes an overdraft impossible even under
-    // concurrent access: the database itself refuses the row update if funds are
-    // insufficient at the moment the statement runs, not just when Java checked earlier.
+    /*
+     The "AND balance >= ?" guard is what makes an overdraft impossible even under
+     concurrent access: the database itself refuses the row update if funds are
+     insufficient at the moment the statement runs, not just when Java checked earlier.
+    */
     private static final String DEBIT_SQL =
             "UPDATE accounts SET balance = balance - ? WHERE account_id = ? AND balance >= ? RETURNING balance";
 
@@ -94,10 +95,12 @@ public class TransactionDAOImpl implements TransactionDAO {
         try (Connection connection = ConnectionFactory.getConnectionFactory().getConnection()) {
             connection.setAutoCommit(false);
             try {
-                // If this debit succeeds but the credit below fails for any reason
-                // (bad account ID, connection drop, etc.), the catch blocks roll
-                // back the WHOLE connection - this debit included. Money can't
-                // vanish from the sender without landing on the receiver.
+                /*
+                 If this debit succeeds but the credit below fails for any reason
+                 (bad account ID, connection drop, etc.), the catch blocks roll
+                 back the entire connection - this debit included. Money can't
+                 vanish from the sender without landing on the receiver.
+                */
                 BigDecimal senderBalanceAfter = debit(connection, fromAccountId, amount);
                 BigDecimal receiverBalanceAfter = credit(connection, toAccountId, amount);
 
@@ -139,8 +142,8 @@ public class TransactionDAOImpl implements TransactionDAO {
         }
     }
 
-    // --- shared helpers, all operating on a caller-supplied connection so they
-    //     participate in whatever transaction the caller already started ---
+    //     shared helpers, all operating on a caller-supplied connection so they
+    //     participate in whatever transaction the caller already started
 
     private BigDecimal credit(Connection connection, String accountId, BigDecimal amount) throws SQLException {
     try (PreparedStatement statement = connection.prepareStatement(CREDIT_SQL)) {
@@ -155,10 +158,10 @@ public class TransactionDAOImpl implements TransactionDAO {
         }
     }
 
-    /**
-     * NOTE: this assumes the caller already confirmed the account exists (e.g. the
-     * user is logged in). Under that assumption, zero rows updated can only mean
-     * one thing: balance < amount, i.e. insufficient funds.
+    /*
+     This assumes the caller already confirmed the account exists (e.g. the
+     user is logged in). Under that assumption, zero rows updated can only mean
+     one thing: balance < amount, i.e. insufficient funds.
      */
     private BigDecimal debit(Connection connection, String accountId, BigDecimal amount) throws SQLException {
     try (PreparedStatement statement = connection.prepareStatement(DEBIT_SQL)) {

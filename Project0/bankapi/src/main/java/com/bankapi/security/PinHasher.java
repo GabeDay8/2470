@@ -6,16 +6,16 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 
-/**
- * Turns a PIN into something safe to store, and checks a PIN against a
- * stored hash. Never stores or logs the raw PIN anywhere.
- *
- * How it works: a random 16-byte "salt" is generated per account so two
- * people with the same PIN don't end up with the same stored hash. The PIN
- * is combined with the salt and run through SHA-256. Both the salt and the
- * resulting hash are stored together (Base64-encoded, separated by ":"),
- * so matches() can redo the same process on login and compare results -
- * it never has to reverse the hash, because SHA-256 can't be reversed.
+/*
+ Turns a PIN into something safe to store, and checks a PIN against a
+ stored hash. Never stores or logs the raw PIN anywhere.
+
+ A random 16-byte "salt" is generated per account so two
+ people with the same PIN don't end up with the same stored hash. The PIN
+ is combined with the salt and run through SHA-256. Both the salt and the
+ resulting hash are stored together (Base64-encoded, separated by ":"),
+ so matches() can redo the same process on login and compare results -
+ it never has to reverse the hash, because SHA-256 can't be reversed.
  */
 public final class PinHasher {
 

@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/**
- * Creates the two tables the whole app is built on, if they don't already
- * exist. Call SchemaInitializer.initialize() once, at startup, from Main.
+/*
+ Creates the two tables the whole app is built on, if they don't already
+ exist. Call SchemaInitializer.initialize() once, at startup, from Main.
  */
 public class SchemaInitializer {
 

@@ -7,15 +7,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-/**
- * Hands out JDBC connections to the Postgres database described in
- * db.properties. This mirrors the singleton pattern from the course
- * reference, with one deliberate change: it loads db.properties from the
- * CLASSPATH (getResourceAsStream) instead of a relative file path
- * ("src/main/resources/db.properties"). A relative path only works if you
- * happen to launch the JVM from the exact project directory; loading from
- * the classpath works no matter where the app is run from, including when
- * it's packaged into a jar.
+/*
+ Hands out JDBC connections to the Postgres database described in
+ db.properties. A relative path only works if you
+ happen to launch the JVM from the exact project directory; loading from
+ the classpath works no matter where the app is run from, including when
+ it's packaged into a jar.
  */
 public class ConnectionFactory {
 

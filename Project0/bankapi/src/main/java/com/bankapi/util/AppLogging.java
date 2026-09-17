@@ -6,14 +6,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-/**
- * Sets up file-based logging once, at startup. Call AppLogging.configure()
- * from Main before anything else runs.
- *
- * Java's built-in logging API doesn't have a level literally called
- * "ERROR" - its closest equivalent is SEVERE. Everywhere the spec says
- * "log at ERROR", this app calls logger.severe(...); everywhere it says
- * "log at INFO", it calls logger.info(...). Both end up in the same file.
+/*
+ Sets up file-based logging once, at startup. Call AppLogging.configure()
+ from Main before anything else runs.
+ Everywhere the spec says:
+ "log at ERROR", this app calls logger.severe(...); everywhere it says
+ "log at INFO", it calls logger.info(...). Both end up in the same file.
  */
 public final class AppLogging {
 

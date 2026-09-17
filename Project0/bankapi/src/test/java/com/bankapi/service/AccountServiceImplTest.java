@@ -23,10 +23,10 @@ import com.bankapi.persistence.AccountDAO;
 import com.bankapi.persistence.TransactionDAO;
 import com.bankapi.security.PinHasher;
 
-/**
- * These tests never touch a real database - AccountDAO and TransactionDAO
- * are Mockito fakes, so every test here is purely checking AccountServiceImpl's
- * OWN logic (the business rules), in isolation from Postgres.
+/*
+ These tests never touch a real database - AccountDAO and TransactionDAO
+ are Mockito fakes, so every test here is purely checking AccountServiceImpl's
+ own logic (the business rules), in isolation from Postgres.
  */
 class AccountServiceImplTest {
 
